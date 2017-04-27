@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Google.Apis.YouTube.v3;
+using Google.Apis.YouTube.v3.Data;
+using Google.Apis.Services;
+using System.IO;
 
 namespace ServiceTools
 {
@@ -23,6 +27,35 @@ namespace ServiceTools
         public MainWindow()
         {
             InitializeComponent();
+            Startup();
+        }
+        //Clean this up later
+
+        private void Startup()
+        {
+
+        }
+        private async Task Run()
+        {
+            // Create the service.
+            var service = new DiscoveryService(new BaseClientService.Initializer
+            {
+                ApplicationName = "Service Tools",
+                ApiKey = File.ReadAllText("token.txt"),
+            });
+
+            // Run the request.
+            Console.WriteLine("Executing a list request...");
+            var result = await service.Apis.List().ExecuteAsync();
+
+            // Display the results.
+            if (result.Items != null)
+            {
+                foreach (DirectoryList.ItemsData api in result.Items)
+                {
+                    Console.WriteLine(api.Id + " - " + api.Title);
+                }
+            }
         }
     }
 }
