@@ -31,18 +31,7 @@ namespace ServiceTools
 
         private async void TimerOnTick(object sender, EventArgs eventArgs)
         {
-            var newChats = await CoreService.Instance.GetSuperChats();
-            if (_lastChats == null)
-            {
-                _lastChats = newChats;
-                return;
-            }
-            foreach (var newChat in newChats)
-            {
-                if (_lastChats.Contains(newChat))
-                    return;
-                NewSuperChat?.Invoke(newChat.Snippet);
-            }
+            var newChats = await CoreService.Instance.MainLoop();
         }
     }
 }

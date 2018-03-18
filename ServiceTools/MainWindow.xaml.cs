@@ -37,25 +37,7 @@ namespace ServiceTools
         }
         private async Task Run()
         {
-            // Create the service.
-            var service = new DiscoveryService(new BaseClientService.Initializer
-            {
-                ApplicationName = "Service Tools",
-                ApiKey = File.ReadAllText("token.txt"),
-            });
-
-            // Run the request.
-            Console.WriteLine("Executing a list request...");
-            var result = await service.Apis.List().ExecuteAsync();
-
-            // Display the results.
-            if (result.Items != null)
-            {
-                foreach (DirectoryList.ItemsData api in result.Items)
-                {
-                    Console.WriteLine(api.Id + " - " + api.Title);
-                }
-            }
+            
         }
     }
 }
